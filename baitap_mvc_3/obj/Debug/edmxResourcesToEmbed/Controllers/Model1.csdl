@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="baitap_mvc2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Khachhang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ten" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Diachi" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Sdt" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Hinhanhs" Relationship="baitap_mvc2Model.fk_kh" FromRole="Khachhang" ToRole="Hinhanh" />
+  </EntityType>
+  <EntityType Name="Maytinh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenMay" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Gia" Type="Int32" />
+    <Property Name="Ram" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="baitap_mvc2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Khachhangs" EntityType="Self.Khachhang" />
+    <EntitySet Name="Maytinhs" EntityType="Self.Maytinh" />
+    <EntitySet Name="Admins" EntityType="baitap_mvc2Model.Admin" />
+    <EntitySet Name="Hinhanhs" EntityType="baitap_mvc2Model.Hinhanh" />
+    <AssociationSet Name="fk_kh" Association="baitap_mvc2Model.fk_kh">
+      <End Role="Khachhang" EntitySet="Khachhangs" />
+      <End Role="Hinhanh" EntitySet="Hinhanhs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ten" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Taikhoan" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="Matkhau" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Hinhanh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="khID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Khachhang" Relationship="baitap_mvc2Model.fk_kh" FromRole="Hinhanh" ToRole="Khachhang" />
+  </EntityType>
+  <Association Name="fk_kh">
+    <End Type="baitap_mvc2Model.Khachhang" Role="Khachhang" Multiplicity="1" />
+    <End Type="baitap_mvc2Model.Hinhanh" Role="Hinhanh" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Khachhang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Hinhanh">
+        <PropertyRef Name="khID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<baitap_mvc_3.Models.Product>
+
+@{
+    ViewBag.Title = "ProductMenu";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>ProductMenu</h2>
+
+<p>
+    @Html.ActionLink("Create New", "ProductCreate", null,htmlAttributes: new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Images)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Decription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @{
+                    if (item.Images.Count(m => m.ProductID == item.ID) > 0)
+                    {
+                        var profileImg = new baitap_mvc_3.Models.baitap_mvc2Entities().Images.FirstOrDefault(m => m.ProductID == item.ID);
+                        <img class="img-fluid w-100" src="@profileImg.Url" alt="" style="height: 100px; width: 100px">
+                    }
+                    else
+                    {
+                        <img class="img-fluid w-100" src="~/Data/OIP.jpg" alt="Not found" style="height: 100px; width: 100px">
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Decription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "ProductEdit", new { id = item.ID }, htmlAttributes: new {@class = "btn btn-primary" })
+                @Html.ActionLink("Delete", "ProductDelete", new { id = item.ID }, htmlAttributes: new {@class = "btn btn-danger"})
+            </td>
+        </tr>
+    }
+
+</table>

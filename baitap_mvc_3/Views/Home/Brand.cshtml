@@ -1,0 +1,54 @@
+﻿@model IEnumerable<baitap_mvc_3.Models.Product>
+
+@{
+    ViewBag.Title = "Brand";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="container-fluid" style="display: flex;">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Price
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="~/Home/Brand?brandName=@ViewBag.BrandName&sortOrder=asc">Increase</a></li>
+            <li><a href="~/Home/Brand?brandName=@ViewBag.BrandName&sortOrder=desc">Decrease</a></li>
+        </ul>
+    </div>
+</div>
+<br />
+<div class="row px-xl-5" id="productTable">
+    @if (Model.Count() < 1)
+    {
+        <h3>Không có sản phẩm nào =((</h3>
+    }
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+            <div class="product-item bg-light mb-4">
+                <div class="text-center py-4">
+                    <a href="~/Product/ProductDetail?id=@item.ID">
+                        @{
+                            if (item.Images.Count(m => m.ProductID == item.ID) > 0)
+                            {
+                                var profileImg = new baitap_mvc_3.Models.baitap_mvc2Entities().Images.FirstOrDefault(m => m.ProductID == item.ID);
+                                <img class="img-fluid w-100" src="@profileImg.Url" alt="" style="height: 100px; width: 100px">
+                            }
+                            else
+                            {
+                                <img class="img-fluid w-100" src="~/Data/OIP.jpg" alt="Not found" style="height: 100px; width: 100px">
+                            }
+                        }
+                    </a>
+                    <br />
+                    <a class="h6 text-decoration-none text-truncate" href="~/Product/ProductDetail?id=@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                    <div class="d-flex align-items-center justify-content-center mt-2" style="display: flex; flex-direction: row; justify-content: center;">
+                        <h5>@Html.DisplayFor(modelItem => item.Price)</h5><h5>đ</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

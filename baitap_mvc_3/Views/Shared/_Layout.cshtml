@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Online Shop</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @Html.Action("NavbarData", "Home")
+                </ul>
+                <ul class="nav navbar-nav" style="float: right">
+                    @{
+                        var customer = (baitap_mvc_3.Models.Customer)Session["customer-login"];
+                    }
+                    <li>
+                        <form class="navbar-brand mt-2 mt-lg-0" action="~/Home/Index" method="get" style="display: flex;">
+                            <input type="search" class="form-control" placeholder="Search" name="search" />
+                            <button class="form-control" type="submit" style="width: fit-content">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </li>
+                    @if (customer != null)
+                    {
+                        <li>
+                            <a class="navbar-brand mt-2 mt-lg-0" href="~/Cart/CartIndex">Cart</a>
+                        </li>
+                        <li>
+                            <a class="navbar-brand mt-2 mt-lg-0" href="#">
+                                <img src="@customer.Url" style="border-radius: 50%; height:30px; width:30px" />
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="~/User/Logout">Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="~/User/Login">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My Online Shop</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @RenderSection("productDetail", required: false)
+</body>
+</html>

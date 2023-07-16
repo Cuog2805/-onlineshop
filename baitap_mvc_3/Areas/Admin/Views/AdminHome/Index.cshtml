@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        @{
+            var user = (baitap_mvc_3.Models.Nhanvien)HttpContext.Current.Session["admin"];
+        }
+
+        <h3>Trang chu Admin + @user.TenNV</h3>
+        @Html.ActionLink("Danh sách", "Danhsach", "Nhanvien")
+        <br />
+        @Html.ActionLink("Products", "ProductMenu", "AdminProduct")
+        <br />
+        @Html.ActionLink("Dăng xuất", "Logout", "AdminHome")
+    </div>
+</body>
+</html>

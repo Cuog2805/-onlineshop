@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="baitap_mvc2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ten" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Taikhoan" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Matkhau" Type="nchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hinhanh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Url" Type="varchar" MaxLength="255" />
+    <Property Name="khID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Khachhang">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ten" Type="nchar" MaxLength="50" />
+    <Property Name="Diachi" Type="nchar" MaxLength="50" />
+    <Property Name="Sdt" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Maytinh">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TenMay" Type="nchar" MaxLength="50" />
+    <Property Name="Gia" Type="int" />
+    <Property Name="Ram" Type="int" />
+  </EntityType>
+  <Association Name="fk_kh">
+    <End Role="Khachhang" Type="Self.Khachhang" Multiplicity="1" />
+    <End Role="Hinhanh" Type="Self.Hinhanh" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Khachhang">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Hinhanh">
+        <PropertyRef Name="khID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="baitap_mvc2ModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hinhanh" EntityType="Self.Hinhanh" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Khachhang" EntityType="Self.Khachhang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Maytinh" EntityType="Self.Maytinh" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_kh" Association="Self.fk_kh">
+      <End Role="Khachhang" EntitySet="Khachhang" />
+      <End Role="Hinhanh" EntitySet="Hinhanh" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

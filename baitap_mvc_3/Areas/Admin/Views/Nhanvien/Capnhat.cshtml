@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model baitap_mvc_3.Models.Nhanvien
+@{
+    ViewBag.Title = "Chi tiet";
+    var listChucNang = new baitap_mvc_3.Models.baitap_mvc2Entities().Chucnangs.ToList();
+}
+
+<br />
+<div class="col-md-12">
+    <p>
+        Thông tin tài khoản: @Model.TenNV
+    </p>
+</div>
+<div class="col-md-12">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Mã chức năng</td>
+                <td>Tên chức năng</td>
+                <td>Phân quyền</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in listChucNang)
+            {
+                var phanQuyen = new baitap_mvc_3.Models.baitap_mvc2Entities().Phanquyens.Count(m => m.idChucnang == item.ID & m.idNhanvien == Model.ID);
+                <tr>
+                    <td>@item.MaChucNang</td>
+                    <td>@item.TenChucNang</td>
+                    <td>
+                        <input type="checkbox" @Html.Raw(phanQuyen > 0 ? "checked" : "") onchange="LuuPhanQuyen(@Model.ID, @item.ID)" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script>
+        function LuuPhanQuyen(idNhanvien, idChucnang) {
+            var jsonData = { idNhanvien: idNhanvien, idChucnang: idChucnang }
+            $.ajax({
+                url: '/Admin/Nhanvien/PhanQuyenJSON',
+                type: 'post',
+                data: jsonData,
+                dataType: 'JSON',
+                success: function (data) {
+                    alert(data.status);
+                }
+            })
+        }
+
+    </script>
+
+}

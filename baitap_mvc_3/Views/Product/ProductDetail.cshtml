@@ -1,0 +1,191 @@
+﻿@model baitap_mvc_3.Models.Product
+
+@{
+    ViewBag.Title = "ProductDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var customer = (baitap_mvc_3.Models.Customer)Session["customer-login"];
+}
+
+<style>
+    .slideshow {
+        position: relative;
+    }
+
+    .slide {
+        display: none;
+    }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+        }
+
+    .prev,
+    .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 10px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        text-decoration: none;
+        font-size: 24px;
+    }
+
+    .prev {
+        left: -50px;
+    }
+
+    .next {
+        right: 100px;
+    }
+</style>
+<h2>Detail</h2>
+<div class="row px-xl-5">
+    <div class="col-lg-5 mb-30">
+        <div class="slideshow">
+            @foreach (var item in Model.Images)
+            {
+                <div class="slide">
+                    <img class="w-100 h-100" src="@item.Url" alt="Image" style="height: 300px; width: 300px">
+                </div>
+            }
+            <a class="prev" href="#">❮</a>
+            <a class="next" href="#">❯</a>
+        </div>
+    </div>
+    <div class="carousel-"></div>
+    <div class="col-lg-7 h-auto mb-30">
+        <div class="h-100 bg-light p-30">
+            <div class="h-100 bg-light p-30">
+                <h3>@Html.DisplayFor(model => model.Name)</h3>
+                <h3 class="font-weight-semi-bold mb-4">@Html.DisplayFor(model => model.Price) đ</h3>
+                <p class="mb-4">
+                    @Html.DisplayFor(model => model.Color)
+                </p>
+                <p class="mb-4">
+                    @Html.DisplayFor(model => model.Decription)
+                </p>
+                <div class="d-flex align-items-center mb-4 pt-2">
+                    <div class="input-group quantity mr-3" style="width: 130px;">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-minus" id="decreaseQuantity" onclick="Decrease(@Model.ID)">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <span class="form-control bg-secondary border-0 text-center" id="quantity">@Model.Quantity</span>
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary btn-plus" id="increaseQuantity" onclick="Increase(@Model.ID)">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="d-flex mb-3">
+                        <strong class="text-dark mr-3">Sizes:</strong>
+                        <select class="form-select" id="size-menu">
+                            <option id="size-null">Select size</option>
+                            @foreach (var item in Model.Sizes)
+                            {
+                                <option>@item.Size1</option>
+                            }
+                        </select>
+                    </div>
+                    <br />
+                    <a class="btn btn-primary px-3" id="cartNotify" href="#">
+                        <i class="fa fa-shopping-cart mr-1"></i>Add To Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section productDetail{
+    <script>
+        function Increase(productID) {
+            var jsonData = { productID: productID }
+            $.ajax({
+                url: '/Product/IncreaseQuantity',
+                type: 'post',
+                data: jsonData,
+                dataType: 'JSON',
+                success: function (data) {
+                    var quantityElement = $('#quantity');
+                    quantityElement.text(data.quantity);
+                }
+            })
+        }
+        function Decrease(productID) {
+            var jsonData = { productID: productID }
+            $.ajax({
+                url: '/Product/DecreaseQuantity',
+                type: 'post',
+                data: jsonData,
+                dataType: 'JSON',
+                success: function (data) {
+                    var quantityElement = $('#quantity');
+                    quantityElement.text(data.quantity);
+                }
+            })
+        }
+        $("#cartNotify").click(function () {
+            var sessionValue = '@Session["customer-login"]';
+            if (sessionValue == '') {
+                alert("Chưa đăng nhập!");
+            }
+            else {
+                var sizemenuValue = $("#size-menu").val();
+                if (sizemenuValue == $("#size-null").val()) {
+                    alert("Chưa chọn Size!")
+                }
+                else {
+                    var productSize = parseInt(sizemenuValue);
+                    var productID = @Model.ID;
+                    $.ajax({
+                        url: '/Product/AddToCart',
+                        type: 'POST',
+                        data: { productSize: productSize, productID: productID },
+                        success: function (data) {
+                            alert(data.status);
+                        }
+                    });
+                }
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            var slideshow = document.querySelector(".slideshow");
+            var slides = Array.from(slideshow.querySelectorAll(".slide"));
+            var prevButton = slideshow.querySelector(".prev");
+            var nextButton = slideshow.querySelector(".next");
+            var currentSlideIndex = 0;
+
+            function showSlide(index) {
+                slides.forEach(function (slide) {
+                    slide.classList.remove("active");
+                });
+                slides[index].classList.add("active");
+            }
+
+            function goToPrevSlide() {
+                currentSlideIndex = (currentSlideIndex === 0) ? slides.length - 1 : currentSlideIndex - 1;
+                showSlide(currentSlideIndex);
+            }
+
+            function goToNextSlide() {
+                currentSlideIndex = (currentSlideIndex === slides.length - 1) ? 0 : currentSlideIndex + 1;
+                showSlide(currentSlideIndex);
+            }
+
+            prevButton.addEventListener("click", goToPrevSlide);
+            nextButton.addEventListener("click", goToNextSlide);
+
+            // Hiển thị slide đầu tiên
+            showSlide(currentSlideIndex);
+        });
+    </script>
+}

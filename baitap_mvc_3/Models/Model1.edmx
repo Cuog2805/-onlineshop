@@ -1,0 +1,835 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="baitap_mvc2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ten" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Taikhoan" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Matkhau" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Cartitem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" />
+          <Property Name="Url" Type="nchar" MaxLength="255" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Size" Type="int" />
+          <Property Name="Total" Type="float" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Chucnang">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenChucNang" Type="nchar" MaxLength="50" />
+          <Property Name="MaChucNang" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nchar" MaxLength="50" />
+          <Property Name="Password" Type="nchar" MaxLength="50" />
+          <Property Name="Email" Type="nchar" MaxLength="50" />
+          <Property Name="Address" Type="nchar" MaxLength="50" />
+          <Property Name="Phone" Type="nchar" MaxLength="10" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="Url" Type="nchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Hinhanh">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="varchar" MaxLength="255" />
+          <Property Name="khID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nchar" MaxLength="255" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Khachhang">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ten" Type="nchar" MaxLength="50" />
+          <Property Name="Diachi" Type="nchar" MaxLength="50" />
+          <Property Name="Sdt" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Nhanvien">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nchar" MaxLength="50" />
+          <Property Name="Password" Type="nchar" MaxLength="10" />
+          <Property Name="TenNV" Type="nchar" MaxLength="50" />
+          <Property Name="Sdt" Type="nchar" MaxLength="50" />
+          <Property Name="Ngaysinh" Type="date" />
+          <Property Name="Diachi" Type="nchar" MaxLength="50" />
+          <Property Name="IDLoaiNV" Type="int" />
+          <Property Name="Chucvu" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Phanquyen">
+          <Key>
+            <PropertyRef Name="idNhanvien" />
+            <PropertyRef Name="idChucnang" />
+          </Key>
+          <Property Name="idNhanvien" Type="int" Nullable="false" />
+          <Property Name="idChucnang" Type="int" Nullable="false" />
+          <Property Name="Ghichu" Type="nchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Color" Type="nchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Decription" Type="nchar" MaxLength="255" />
+          <Property Name="BrandID" Type="int" />
+          <Property Name="CategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="Sizes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Size" Type="int" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Cartitem_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cartitem" Type="Self.Cartitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cartitem">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cartitem_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cartitem" Type="Self.Cartitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cartitem">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Images_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Images" Type="Self.Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Images">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_kh">
+          <End Role="Khachhang" Type="Self.Khachhang" Multiplicity="1" />
+          <End Role="Hinhanh" Type="Self.Hinhanh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Khachhang">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Hinhanh">
+              <PropertyRef Name="khID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phanquyen_Chucnang">
+          <End Role="Chucnang" Type="Self.Chucnang" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phanquyen" Type="Self.Phanquyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chucnang">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Phanquyen">
+              <PropertyRef Name="idChucnang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phanquyen_Nhanvien">
+          <End Role="Nhanvien" Type="Self.Nhanvien" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phanquyen" Type="Self.Phanquyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nhanvien">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Phanquyen">
+              <PropertyRef Name="idNhanvien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sizes_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sizes" Type="Self.Sizes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sizes">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="baitap_mvc2ModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cartitem" EntityType="Self.Cartitem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chucnang" EntityType="Self.Chucnang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hinhanh" EntityType="Self.Hinhanh" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Khachhang" EntityType="Self.Khachhang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nhanvien" EntityType="Self.Nhanvien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phanquyen" EntityType="Self.Phanquyen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cartitem_Customer" Association="Self.FK_Cartitem_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cartitem" EntitySet="Cartitem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cartitem_Product" Association="Self.FK_Cartitem_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Cartitem" EntitySet="Cartitem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Images_Product" Association="Self.FK_Images_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="fk_kh" Association="Self.fk_kh">
+            <End Role="Khachhang" EntitySet="Khachhang" />
+            <End Role="Hinhanh" EntitySet="Hinhanh" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phanquyen_Chucnang" Association="Self.FK_Phanquyen_Chucnang">
+            <End Role="Chucnang" EntitySet="Chucnang" />
+            <End Role="Phanquyen" EntitySet="Phanquyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phanquyen_Nhanvien" Association="Self.FK_Phanquyen_Nhanvien">
+            <End Role="Nhanvien" EntitySet="Nhanvien" />
+            <End Role="Phanquyen" EntitySet="Phanquyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Brand" Association="Self.FK_Product_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sizes_Product" Association="Self.FK_Sizes_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Sizes" EntitySet="Sizes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="baitap_mvc2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Khachhang">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ten" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Diachi" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Sdt" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Hinhanhs" Relationship="baitap_mvc2Model.fk_kh" FromRole="Khachhang" ToRole="Hinhanh" />
+        </EntityType>
+        <EntityContainer Name="baitap_mvc2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Khachhangs" EntityType="Self.Khachhang" />
+          <EntitySet Name="Admins" EntityType="baitap_mvc2Model.Admin" />
+          <EntitySet Name="Hinhanhs" EntityType="baitap_mvc2Model.Hinhanh" />
+          <AssociationSet Name="fk_kh" Association="baitap_mvc2Model.fk_kh">
+            <End Role="Khachhang" EntitySet="Khachhangs" />
+            <End Role="Hinhanh" EntitySet="Hinhanhs" />
+          </AssociationSet>
+          <EntitySet Name="Chucnangs" EntityType="baitap_mvc2Model.Chucnang" />
+          <EntitySet Name="Nhanviens" EntityType="baitap_mvc2Model.Nhanvien" />
+          <EntitySet Name="Phanquyens" EntityType="baitap_mvc2Model.Phanquyen" />
+          <AssociationSet Name="FK_Phanquyen_Chucnang" Association="baitap_mvc2Model.FK_Phanquyen_Chucnang">
+            <End Role="Chucnang" EntitySet="Chucnangs" />
+            <End Role="Phanquyen" EntitySet="Phanquyens" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phanquyen_Nhanvien" Association="baitap_mvc2Model.FK_Phanquyen_Nhanvien">
+            <End Role="Nhanvien" EntitySet="Nhanviens" />
+            <End Role="Phanquyen" EntitySet="Phanquyens" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="baitap_mvc2Model.sysdiagram" />
+          <EntitySet Name="Brands" EntityType="baitap_mvc2Model.Brand" />
+          <EntitySet Name="Categories" EntityType="baitap_mvc2Model.Category" />
+          <EntitySet Name="Customers" EntityType="baitap_mvc2Model.Customer" />
+          <EntitySet Name="Images" EntityType="baitap_mvc2Model.Image" />
+          <EntitySet Name="Products" EntityType="baitap_mvc2Model.Product" />
+          <EntitySet Name="Sizes" EntityType="baitap_mvc2Model.Size" />
+          <AssociationSet Name="FK_Product_Brand" Association="baitap_mvc2Model.FK_Product_Brand">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="baitap_mvc2Model.FK_Product_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Images_Product" Association="baitap_mvc2Model.FK_Images_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sizes_Product" Association="baitap_mvc2Model.FK_Sizes_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Size" EntitySet="Sizes" />
+          </AssociationSet>
+          <EntitySet Name="Cartitems" EntityType="baitap_mvc2Model.Cartitem" />
+          <AssociationSet Name="FK_Cartitem_Customer" Association="baitap_mvc2Model.FK_Cartitem_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Cartitem" EntitySet="Cartitems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cartitem_Product" Association="baitap_mvc2Model.FK_Cartitem_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Cartitem" EntitySet="Cartitems" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ten" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Taikhoan" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Matkhau" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Hinhanh">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="khID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Khachhang" Relationship="baitap_mvc2Model.fk_kh" FromRole="Hinhanh" ToRole="Khachhang" />
+        </EntityType>
+        <Association Name="fk_kh">
+          <End Type="baitap_mvc2Model.Khachhang" Role="Khachhang" Multiplicity="1" />
+          <End Type="baitap_mvc2Model.Hinhanh" Role="Hinhanh" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Khachhang">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Hinhanh">
+              <PropertyRef Name="khID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Chucnang">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenChucNang" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="MaChucNang" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Phanquyens" Relationship="baitap_mvc2Model.FK_Phanquyen_Chucnang" FromRole="Chucnang" ToRole="Phanquyen" />
+        </EntityType>
+        <EntityType Name="Nhanvien">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="TenNV" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Sdt" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Ngaysinh" Type="DateTime" Precision="0" />
+          <Property Name="Diachi" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="IDLoaiNV" Type="Int32" />
+          <Property Name="Chucvu" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Phanquyens" Relationship="baitap_mvc2Model.FK_Phanquyen_Nhanvien" FromRole="Nhanvien" ToRole="Phanquyen" />
+        </EntityType>
+        <EntityType Name="Phanquyen">
+          <Key>
+            <PropertyRef Name="idNhanvien" />
+            <PropertyRef Name="idChucnang" />
+          </Key>
+          <Property Name="idNhanvien" Type="Int32" Nullable="false" />
+          <Property Name="idChucnang" Type="Int32" Nullable="false" />
+          <Property Name="Ghichu" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Chucnang" Relationship="baitap_mvc2Model.FK_Phanquyen_Chucnang" FromRole="Phanquyen" ToRole="Chucnang" />
+          <NavigationProperty Name="Nhanvien" Relationship="baitap_mvc2Model.FK_Phanquyen_Nhanvien" FromRole="Phanquyen" ToRole="Nhanvien" />
+        </EntityType>
+        <Association Name="FK_Phanquyen_Chucnang">
+          <End Type="baitap_mvc2Model.Chucnang" Role="Chucnang" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="baitap_mvc2Model.Phanquyen" Role="Phanquyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chucnang">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Phanquyen">
+              <PropertyRef Name="idChucnang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phanquyen_Nhanvien">
+          <End Type="baitap_mvc2Model.Nhanvien" Role="Nhanvien" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="baitap_mvc2Model.Phanquyen" Role="Phanquyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nhanvien">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Phanquyen">
+              <PropertyRef Name="idNhanvien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="baitap_mvc2Model.FK_Product_Brand" FromRole="Brand" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="baitap_mvc2Model.FK_Product_Category" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="Url" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Cartitems" Relationship="baitap_mvc2Model.FK_Cartitem_Customer" FromRole="Customer" ToRole="Cartitem" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="baitap_mvc2Model.FK_Images_Product" FromRole="Image" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Decription" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="BrandID" Type="Int32" />
+          <Property Name="CategoryID" Type="Int32" />
+          <NavigationProperty Name="Brand" Relationship="baitap_mvc2Model.FK_Product_Brand" FromRole="Product" ToRole="Brand" />
+          <NavigationProperty Name="Category" Relationship="baitap_mvc2Model.FK_Product_Category" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Images" Relationship="baitap_mvc2Model.FK_Images_Product" FromRole="Product" ToRole="Image" />
+          <NavigationProperty Name="Sizes" Relationship="baitap_mvc2Model.FK_Sizes_Product" FromRole="Product" ToRole="Size" />
+          <NavigationProperty Name="Cartitems" Relationship="baitap_mvc2Model.FK_Cartitem_Product" FromRole="Product" ToRole="Cartitem" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Size1" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="baitap_mvc2Model.FK_Sizes_Product" FromRole="Size" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Product_Brand">
+          <End Type="baitap_mvc2Model.Brand" Role="Brand" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Type="baitap_mvc2Model.Category" Role="Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Images_Product">
+          <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="baitap_mvc2Model.Image" Role="Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sizes_Product">
+          <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="baitap_mvc2Model.Size" Role="Size" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Size">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cartitem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Size" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="baitap_mvc2Model.FK_Cartitem_Customer" FromRole="Cartitem" ToRole="Customer" />
+          <NavigationProperty Name="Product" Relationship="baitap_mvc2Model.FK_Cartitem_Product" FromRole="Cartitem" ToRole="Product" />
+          <Property Name="Total" Type="Double" />
+          <Property Name="Url" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Cartitem_Customer">
+          <End Type="baitap_mvc2Model.Customer" Role="Customer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="baitap_mvc2Model.Cartitem" Role="Cartitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cartitem">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cartitem_Product">
+          <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="baitap_mvc2Model.Cartitem" Role="Cartitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Cartitem">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="baitap_mvc2ModelStoreContainer" CdmEntityContainer="baitap_mvc2Entities">
+          <EntitySetMapping Name="Khachhangs">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Khachhang">
+              <MappingFragment StoreEntitySet="Khachhang">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Ten" ColumnName="Ten" />
+                <ScalarProperty Name="Diachi" ColumnName="Diachi" />
+                <ScalarProperty Name="Sdt" ColumnName="Sdt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Matkhau" ColumnName="Matkhau" />
+                <ScalarProperty Name="Taikhoan" ColumnName="Taikhoan" />
+                <ScalarProperty Name="Ten" ColumnName="Ten" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hinhanhs">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Hinhanh">
+              <MappingFragment StoreEntitySet="Hinhanh">
+                <ScalarProperty Name="khID" ColumnName="khID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chucnangs">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Chucnang">
+              <MappingFragment StoreEntitySet="Chucnang">
+                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nhanviens">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Nhanvien">
+              <MappingFragment StoreEntitySet="Nhanvien">
+                <ScalarProperty Name="Chucvu" ColumnName="Chucvu" />
+                <ScalarProperty Name="IDLoaiNV" ColumnName="IDLoaiNV" />
+                <ScalarProperty Name="Diachi" ColumnName="Diachi" />
+                <ScalarProperty Name="Ngaysinh" ColumnName="Ngaysinh" />
+                <ScalarProperty Name="Sdt" ColumnName="Sdt" />
+                <ScalarProperty Name="TenNV" ColumnName="TenNV" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phanquyens">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Phanquyen">
+              <MappingFragment StoreEntitySet="Phanquyen">
+                <ScalarProperty Name="Ghichu" ColumnName="Ghichu" />
+                <ScalarProperty Name="idChucnang" ColumnName="idChucnang" />
+                <ScalarProperty Name="idNhanvien" ColumnName="idNhanvien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="Decription" ColumnName="Decription" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sizes">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Size">
+              <MappingFragment StoreEntitySet="Sizes">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Size1" ColumnName="Size" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cartitems">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Cartitem">
+              <MappingFragment StoreEntitySet="Cartitem">
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
