@@ -9,6 +9,34 @@
     <Property Name="Taikhoan" Type="nchar" MaxLength="50" Nullable="false" />
     <Property Name="Matkhau" Type="nchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="Brand">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Cartitem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="50" />
+    <Property Name="Url" Type="nchar" MaxLength="255" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Size" Type="int" />
+    <Property Name="Total" Type="float" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="CustomerID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Chucnang">
     <Key>
       <PropertyRef Name="ID" />
@@ -16,6 +44,19 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TenChucNang" Type="nchar" MaxLength="50" />
     <Property Name="MaChucNang" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nchar" MaxLength="50" />
+    <Property Name="Password" Type="nchar" MaxLength="50" />
+    <Property Name="Email" Type="nchar" MaxLength="50" />
+    <Property Name="Address" Type="nchar" MaxLength="50" />
+    <Property Name="Phone" Type="nchar" MaxLength="10" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="Url" Type="nchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="Hinhanh">
     <Key>
@@ -25,6 +66,14 @@
     <Property Name="Url" Type="varchar" MaxLength="255" />
     <Property Name="khID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Images">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Url" Type="nchar" MaxLength="255" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Khachhang">
     <Key>
       <PropertyRef Name="ID" />
@@ -33,15 +82,6 @@
     <Property Name="Ten" Type="nchar" MaxLength="50" />
     <Property Name="Diachi" Type="nchar" MaxLength="50" />
     <Property Name="Sdt" Type="nchar" MaxLength="10" />
-  </EntityType>
-  <EntityType Name="Maytinh">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TenMay" Type="nchar" MaxLength="50" />
-    <Property Name="Gia" Type="int" />
-    <Property Name="Ram" Type="int" />
   </EntityType>
   <EntityType Name="Nhanvien">
     <Key>
@@ -66,6 +106,79 @@
     <Property Name="idChucnang" Type="int" Nullable="false" />
     <Property Name="Ghichu" Type="nchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="50" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Color" Type="nchar" MaxLength="50" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Decription" Type="nchar" MaxLength="255" />
+    <Property Name="BrandID" Type="int" />
+    <Property Name="CategoryID" Type="int" />
+  </EntityType>
+  <EntityType Name="Sizes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Size" Type="int" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Cartitem_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Cartitem" Type="Self.Cartitem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Cartitem">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cartitem_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Cartitem" Type="Self.Cartitem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Cartitem">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Images_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Images" Type="Self.Images" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Images">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_kh">
     <End Role="Khachhang" Type="Self.Khachhang" Multiplicity="1" />
     <End Role="Hinhanh" Type="Self.Hinhanh" Multiplicity="*" />
@@ -106,14 +219,75 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Product_Brand">
+    <End Role="Brand" Type="Self.Brand" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brand">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="BrandID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sizes_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Sizes" Type="Self.Sizes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Sizes">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="baitap_mvc2ModelStoreContainer">
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cartitem" EntityType="Self.Cartitem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Chucnang" EntityType="Self.Chucnang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Hinhanh" EntityType="Self.Hinhanh" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Khachhang" EntityType="Self.Khachhang" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Maytinh" EntityType="Self.Maytinh" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nhanvien" EntityType="Self.Nhanvien" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Phanquyen" EntityType="Self.Phanquyen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Cartitem_Customer" Association="Self.FK_Cartitem_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Cartitem" EntitySet="Cartitem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cartitem_Product" Association="Self.FK_Cartitem_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Cartitem" EntitySet="Cartitem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Images_Product" Association="Self.FK_Images_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Images" EntitySet="Images" />
+    </AssociationSet>
     <AssociationSet Name="fk_kh" Association="Self.fk_kh">
       <End Role="Khachhang" EntitySet="Khachhang" />
       <End Role="Hinhanh" EntitySet="Hinhanh" />
@@ -125,6 +299,18 @@
     <AssociationSet Name="FK_Phanquyen_Nhanvien" Association="Self.FK_Phanquyen_Nhanvien">
       <End Role="Nhanvien" EntitySet="Nhanvien" />
       <End Role="Phanquyen" EntitySet="Phanquyen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Brand" Association="Self.FK_Product_Brand">
+      <End Role="Brand" EntitySet="Brand" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sizes_Product" Association="Self.FK_Sizes_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Sizes" EntitySet="Sizes" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

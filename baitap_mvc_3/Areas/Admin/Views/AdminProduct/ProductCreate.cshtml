@@ -5,12 +5,12 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>ProductCreate</h2>
+<h2>Product Create</h2>
 
-@using (Html.BeginForm("ProductCreate", "AdminProduct", FormMethod.Post,new {enctype = "multipart/form-data"})) 
+@using (Html.BeginForm("ProductCreate", "AdminProduct", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
     <h4>Product</h4>
     <hr />
@@ -21,13 +21,6 @@
         <div class="col-md-10">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input multiple type="file" name="fileImages" />
         </div>
     </div>
 
@@ -62,7 +55,7 @@
             IEnumerable<SelectListItem> brandSelectList = brandList.Select(x => new SelectListItem { Value = x.ID.ToString(), Text = x.Name });
         }
         <div class="col-md-10">
-            @Html.DropDownList("BrandID", brandSelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownList("BrandID", brandSelectList, "--Select Brand--", htmlAttributes: new { @class = "form-control" })
         </div>
     </div>
 
@@ -73,27 +66,24 @@
             IEnumerable<SelectListItem> cateSelectList = categoryList.Select(x => new SelectListItem { Value = x.ID.ToString(), Text = x.Name });
         }
         <div class="col-md-10">
-            @Html.DropDownList("CategoryID", cateSelectList, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownList("CategoryID", cateSelectList, "--Select Category--", htmlAttributes: new { @class = "form-control" })
         </div>
     </div>
 
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.Sizes, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Sizes, "Size", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @foreach (var item in Model.Sizes.ToList())
+            @foreach (var item in ViewBag.sizeList)
             {
-                @Html.EditorFor(modelItem => item.Size1, new { htmlAttributes = new { @class = "form-control" } })
+                <input class="form-check-input" id="selectedSize" name="selectedSize" type="checkbox" value="@item.ID" /> @item.Size1
             }
         </div>
-    </div>*@
+    </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Sizes, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @for (int i=0; i<Model.Sizes.Count; i++)
-            {
-                @Html.EditorFor(model => model.Sizes.ToList()[i].Size1, new { htmlAttributes = new { @class = "form-control" } })
-            }
+            <input multiple type="file" name="fileImages" />
         </div>
     </div>
 

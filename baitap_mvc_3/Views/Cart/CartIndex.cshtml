@@ -48,7 +48,7 @@
                                 <select class="form-select" id="size-menu-@item.ProductID">
                                     <option>@item.Size</option>
                                     @{
-                                        var sizeTable = new baitap_mvc_3.Models.baitap_mvc2Entities().Sizes.Where(m => m.ProductID == item.ProductID).ToList();
+                                        var sizeTable = item.Product.Sizes;
                                     }
                                     @foreach (var size in sizeTable)
                                     {

@@ -119,13 +119,20 @@
     <Property Name="BrandID" Type="int" />
     <Property Name="CategoryID" Type="int" />
   </EntityType>
+  <EntityType Name="ProductSize">
+    <Key>
+      <PropertyRef Name="ProductID" />
+      <PropertyRef Name="SizeID" />
+    </Key>
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="SizeID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Sizes">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Size" Type="int" />
-    <Property Name="ProductID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -247,17 +254,31 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Sizes_Product">
+  <Association Name="FK_ProductSize_Product">
     <End Role="Product" Type="Self.Product" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="Sizes" Type="Self.Sizes" Multiplicity="*" />
+    <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="Sizes">
+      <Dependent Role="ProductSize">
         <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductSize_Sizes">
+    <End Role="Sizes" Type="Self.Sizes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sizes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProductSize">
+        <PropertyRef Name="SizeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -274,6 +295,7 @@
     <EntitySet Name="Nhanvien" EntityType="Self.Nhanvien" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Phanquyen" EntityType="Self.Phanquyen" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductSize" EntityType="Self.ProductSize" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Cartitem_Customer" Association="Self.FK_Cartitem_Customer">
@@ -308,9 +330,13 @@
       <End Role="Category" EntitySet="Category" />
       <End Role="Product" EntitySet="Product" />
     </AssociationSet>
-    <AssociationSet Name="FK_Sizes_Product" Association="Self.FK_Sizes_Product">
+    <AssociationSet Name="FK_ProductSize_Product" Association="Self.FK_ProductSize_Product">
       <End Role="Product" EntitySet="Product" />
+      <End Role="ProductSize" EntitySet="ProductSize" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductSize_Sizes" Association="Self.FK_ProductSize_Sizes">
       <End Role="Sizes" EntitySet="Sizes" />
+      <End Role="ProductSize" EntitySet="ProductSize" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

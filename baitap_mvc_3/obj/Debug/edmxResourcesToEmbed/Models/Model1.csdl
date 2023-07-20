@@ -35,7 +35,6 @@
     <EntitySet Name="Customers" EntityType="baitap_mvc2Model.Customer" />
     <EntitySet Name="Images" EntityType="baitap_mvc2Model.Image" />
     <EntitySet Name="Products" EntityType="baitap_mvc2Model.Product" />
-    <EntitySet Name="Sizes" EntityType="baitap_mvc2Model.Size" />
     <AssociationSet Name="FK_Product_Brand" Association="baitap_mvc2Model.FK_Product_Brand">
       <End Role="Brand" EntitySet="Brands" />
       <End Role="Product" EntitySet="Products" />
@@ -48,10 +47,6 @@
       <End Role="Product" EntitySet="Products" />
       <End Role="Image" EntitySet="Images" />
     </AssociationSet>
-    <AssociationSet Name="FK_Sizes_Product" Association="baitap_mvc2Model.FK_Sizes_Product">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="Size" EntitySet="Sizes" />
-    </AssociationSet>
     <EntitySet Name="Cartitems" EntityType="baitap_mvc2Model.Cartitem" />
     <AssociationSet Name="FK_Cartitem_Customer" Association="baitap_mvc2Model.FK_Cartitem_Customer">
       <End Role="Customer" EntitySet="Customers" />
@@ -60,6 +55,11 @@
     <AssociationSet Name="FK_Cartitem_Product" Association="baitap_mvc2Model.FK_Cartitem_Product">
       <End Role="Product" EntitySet="Products" />
       <End Role="Cartitem" EntitySet="Cartitems" />
+    </AssociationSet>
+    <EntitySet Name="Sizes" EntityType="baitap_mvc2Model.Size" />
+    <AssociationSet Name="ProductSize" Association="baitap_mvc2Model.ProductSize">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Size" EntitySet="Sizes" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Admin">
@@ -219,17 +219,8 @@
     <NavigationProperty Name="Brand" Relationship="baitap_mvc2Model.FK_Product_Brand" FromRole="Product" ToRole="Brand" />
     <NavigationProperty Name="Category" Relationship="baitap_mvc2Model.FK_Product_Category" FromRole="Product" ToRole="Category" />
     <NavigationProperty Name="Images" Relationship="baitap_mvc2Model.FK_Images_Product" FromRole="Product" ToRole="Image" />
-    <NavigationProperty Name="Sizes" Relationship="baitap_mvc2Model.FK_Sizes_Product" FromRole="Product" ToRole="Size" />
     <NavigationProperty Name="Cartitems" Relationship="baitap_mvc2Model.FK_Cartitem_Product" FromRole="Product" ToRole="Cartitem" />
-  </EntityType>
-  <EntityType Name="Size">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Size1" Type="Int32" />
-    <Property Name="ProductID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Product" Relationship="baitap_mvc2Model.FK_Sizes_Product" FromRole="Size" ToRole="Product" />
+    <NavigationProperty Name="Sizes" Relationship="baitap_mvc2Model.ProductSize" FromRole="Product" ToRole="Size" />
   </EntityType>
   <Association Name="FK_Product_Brand">
     <End Type="baitap_mvc2Model.Brand" Role="Brand" Multiplicity="0..1">
@@ -269,20 +260,6 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Image">
-        <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Sizes_Product">
-    <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="baitap_mvc2Model.Size" Role="Size" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Product">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Size">
         <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
@@ -330,5 +307,17 @@
         <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Size">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Size1" Type="Int32" />
+    <NavigationProperty Name="Products" Relationship="baitap_mvc2Model.ProductSize" FromRole="Size" ToRole="Product" />
+  </EntityType>
+  <Association Name="ProductSize">
+    <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="*" />
+    <End Type="baitap_mvc2Model.Size" Role="Size" Multiplicity="*" />
   </Association>
 </Schema>

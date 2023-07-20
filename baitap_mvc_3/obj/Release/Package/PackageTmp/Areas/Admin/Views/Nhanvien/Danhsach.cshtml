@@ -1,0 +1,83 @@
+﻿@model IEnumerable<baitap_mvc_3.Models.Nhanvien>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Danhsach</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Them","Nhanvien")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenNV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sdt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ngaysinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diachi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IDLoaiNV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chucvu)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenNV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sdt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ngaysinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diachi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDLoaiNV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chucvu)
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật", "Capnhat", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                <a href="~/Admin/Nhanvien/Xoa?id=@item.ID">Delete</a>
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

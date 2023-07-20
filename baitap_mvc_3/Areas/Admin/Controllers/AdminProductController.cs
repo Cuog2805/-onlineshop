@@ -20,16 +20,18 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
         //Create
         public ActionResult ProductCreate()
         {
-            Product model = new Product();
-            model.Sizes.Add(new Size() {});
-            return View(model);
+            baitap_mvc2Entities db = new baitap_mvc2Entities();
+            List<Size> sizeList = db.Sizes.ToList();
+            ViewBag.sizeList = sizeList;
+            return View();
         }
         [HttpPost]
-        public ActionResult ProductCreate(Product model, List<HttpPostedFileBase> fileImages)
+        public ActionResult ProductCreate(Product model, int[] selectedSize, List<HttpPostedFileBase> fileImages)
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
             //add attributes
             model.Quantity = 1;
+            model.Sizes = db.Sizes.Where(m => selectedSize.Contains(m.ID)).ToList();
             db.Products.Add(model);
             //add image
             var path = "";
@@ -53,10 +55,6 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
 
             db.SaveChanges();
             return RedirectToAction("ProductMenu");
-        }
-        public ActionResult SizeCreate(int proID)
-        {
-            return View();
         }
         //Edit
         public ActionResult ProductEdit(int? id)

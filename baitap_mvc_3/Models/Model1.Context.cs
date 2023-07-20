@@ -37,7 +37,7 @@ namespace baitap_mvc_3.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<Cartitem> Cartitems { get; set; }
+        public virtual DbSet<Size> Sizes { get; set; }
     }
 }

@@ -124,13 +124,20 @@
           <Property Name="BrandID" Type="int" />
           <Property Name="CategoryID" Type="int" />
         </EntityType>
+        <EntityType Name="ProductSize">
+          <Key>
+            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="SizeID" />
+          </Key>
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="SizeID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Sizes">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Size" Type="int" />
-          <Property Name="ProductID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -252,17 +259,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Sizes_Product">
+        <Association Name="FK_ProductSize_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Sizes" Type="Self.Sizes" Multiplicity="*" />
+          <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Sizes">
+            <Dependent Role="ProductSize">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSize_Sizes">
+          <End Role="Sizes" Type="Self.Sizes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sizes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductSize">
+              <PropertyRef Name="SizeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -279,6 +300,7 @@
           <EntitySet Name="Nhanvien" EntityType="Self.Nhanvien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Phanquyen" EntityType="Self.Phanquyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSize" EntityType="Self.ProductSize" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sizes" EntityType="Self.Sizes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Cartitem_Customer" Association="Self.FK_Cartitem_Customer">
@@ -313,9 +335,13 @@
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sizes_Product" Association="Self.FK_Sizes_Product">
+          <AssociationSet Name="FK_ProductSize_Product" Association="Self.FK_ProductSize_Product">
             <End Role="Product" EntitySet="Product" />
+            <End Role="ProductSize" EntitySet="ProductSize" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSize_Sizes" Association="Self.FK_ProductSize_Sizes">
             <End Role="Sizes" EntitySet="Sizes" />
+            <End Role="ProductSize" EntitySet="ProductSize" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -357,7 +383,6 @@
           <EntitySet Name="Customers" EntityType="baitap_mvc2Model.Customer" />
           <EntitySet Name="Images" EntityType="baitap_mvc2Model.Image" />
           <EntitySet Name="Products" EntityType="baitap_mvc2Model.Product" />
-          <EntitySet Name="Sizes" EntityType="baitap_mvc2Model.Size" />
           <AssociationSet Name="FK_Product_Brand" Association="baitap_mvc2Model.FK_Product_Brand">
             <End Role="Brand" EntitySet="Brands" />
             <End Role="Product" EntitySet="Products" />
@@ -370,10 +395,6 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Image" EntitySet="Images" />
           </AssociationSet>
-          <AssociationSet Name="FK_Sizes_Product" Association="baitap_mvc2Model.FK_Sizes_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Size" EntitySet="Sizes" />
-          </AssociationSet>
           <EntitySet Name="Cartitems" EntityType="baitap_mvc2Model.Cartitem" />
           <AssociationSet Name="FK_Cartitem_Customer" Association="baitap_mvc2Model.FK_Cartitem_Customer">
             <End Role="Customer" EntitySet="Customers" />
@@ -382,6 +403,11 @@
           <AssociationSet Name="FK_Cartitem_Product" Association="baitap_mvc2Model.FK_Cartitem_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="Cartitem" EntitySet="Cartitems" />
+          </AssociationSet>
+          <EntitySet Name="Sizes" EntityType="baitap_mvc2Model.Size" />
+          <AssociationSet Name="ProductSize" Association="baitap_mvc2Model.ProductSize">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Size" EntitySet="Sizes" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Admin">
@@ -541,17 +567,8 @@
           <NavigationProperty Name="Brand" Relationship="baitap_mvc2Model.FK_Product_Brand" FromRole="Product" ToRole="Brand" />
           <NavigationProperty Name="Category" Relationship="baitap_mvc2Model.FK_Product_Category" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Images" Relationship="baitap_mvc2Model.FK_Images_Product" FromRole="Product" ToRole="Image" />
-          <NavigationProperty Name="Sizes" Relationship="baitap_mvc2Model.FK_Sizes_Product" FromRole="Product" ToRole="Size" />
           <NavigationProperty Name="Cartitems" Relationship="baitap_mvc2Model.FK_Cartitem_Product" FromRole="Product" ToRole="Cartitem" />
-        </EntityType>
-        <EntityType Name="Size">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Size1" Type="Int32" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="baitap_mvc2Model.FK_Sizes_Product" FromRole="Size" ToRole="Product" />
+          <NavigationProperty Name="Sizes" Relationship="baitap_mvc2Model.ProductSize" FromRole="Product" ToRole="Size" />
         </EntityType>
         <Association Name="FK_Product_Brand">
           <End Type="baitap_mvc2Model.Brand" Role="Brand" Multiplicity="0..1">
@@ -591,20 +608,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Image">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sizes_Product">
-          <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="baitap_mvc2Model.Size" Role="Size" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Size">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -652,6 +655,18 @@
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Size1" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="baitap_mvc2Model.ProductSize" FromRole="Size" ToRole="Product" />
+        </EntityType>
+        <Association Name="ProductSize">
+          <End Type="baitap_mvc2Model.Product" Role="Product" Multiplicity="*" />
+          <End Type="baitap_mvc2Model.Size" Role="Size" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -785,15 +800,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sizes">
-            <EntityTypeMapping TypeName="baitap_mvc2Model.Size">
-              <MappingFragment StoreEntitySet="Sizes">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Size1" ColumnName="Size" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Cartitems">
             <EntityTypeMapping TypeName="baitap_mvc2Model.Cartitem">
               <MappingFragment StoreEntitySet="Cartitem">
@@ -809,6 +815,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Sizes">
+            <EntityTypeMapping TypeName="baitap_mvc2Model.Size">
+              <MappingFragment StoreEntitySet="Sizes">
+                <ScalarProperty Name="Size1" ColumnName="Size" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ProductSize" TypeName="baitap_mvc2Model.ProductSize" StoreEntitySet="ProductSize">
+            <EndProperty Name="Size">
+              <ScalarProperty Name="ID" ColumnName="SizeID" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

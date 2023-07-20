@@ -8,7 +8,7 @@
 <h2>ProductMenu</h2>
 
 <p>
-    @Html.ActionLink("Create New", "ProductCreate", null,htmlAttributes: new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create New", "ProductCreate", null, htmlAttributes: new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -46,8 +46,15 @@
                 @{
                     if (item.Images.Count(m => m.ProductID == item.ID) > 0)
                     {
-                        var profileImg = new baitap_mvc_3.Models.baitap_mvc2Entities().Images.FirstOrDefault(m => m.ProductID == item.ID);
-                        <img class="img-fluid w-100" src="@profileImg.Url" alt="" style="height: 100px; width: 100px">
+                        <img class="slide" src="@item.Images.ToList()[0].Url" alt="Not found" style="height: 100px; width: 100px">
+                        <div class="slide-@item.ID" style="display: none">
+                            @for (int i = 1; i < item.Images.Count; i++)
+                            {
+                                <img class="slide" src="@item.Images.ToList()[i].Url" alt="Not found" style="height: 100px; width: 100px">
+                            }
+                        </div>
+                        <a class="btn btn-primary" id="btn-expand" onclick="ExpandImage(@item.ID)">+</a>
+                        <a class="btn btn-primary" id="btn-hide" onclick="HideImage(@item.ID)" style="display: none">-</a>
                     }
                     else
                     {
@@ -71,10 +78,27 @@
                 @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "ProductEdit", new { id = item.ID }, htmlAttributes: new {@class = "btn btn-primary" })
-                @Html.ActionLink("Delete", "ProductDelete", new { id = item.ID }, htmlAttributes: new {@class = "btn btn-danger"})
+                @Html.ActionLink("Edit", "ProductEdit", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Delete", "ProductDelete", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" })
             </td>
         </tr>
     }
 
 </table>
+
+@section productMenu{
+    <script>
+        function ExpandImage(productID) {
+            var slide = $("#slide-" + productID);
+            slide.css({"display": "block"});
+            $("#btn-hide").show();
+            $(this).hide;
+        }
+        function HideImage(productID) {
+            var slide = $("#slide-" + productID);
+            slide.css({ "display": "hide" });
+            $("#btn-expand").show();
+            $(this).hide();
+        }
+    </script>
+}

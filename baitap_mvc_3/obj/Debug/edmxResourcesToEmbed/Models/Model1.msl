@@ -127,15 +127,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Sizes">
-      <EntityTypeMapping TypeName="baitap_mvc2Model.Size">
-        <MappingFragment StoreEntitySet="Sizes">
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="Size1" ColumnName="Size" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Cartitems">
       <EntityTypeMapping TypeName="baitap_mvc2Model.Cartitem">
         <MappingFragment StoreEntitySet="Cartitem">
@@ -151,5 +142,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Sizes">
+      <EntityTypeMapping TypeName="baitap_mvc2Model.Size">
+        <MappingFragment StoreEntitySet="Sizes">
+          <ScalarProperty Name="Size1" ColumnName="Size" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ProductSize" TypeName="baitap_mvc2Model.ProductSize" StoreEntitySet="ProductSize">
+      <EndProperty Name="Size">
+        <ScalarProperty Name="ID" ColumnName="SizeID" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="ID" ColumnName="ProductID" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

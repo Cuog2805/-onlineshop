@@ -18,8 +18,8 @@ namespace baitap_mvc_3.Models
         public Product()
         {
             this.Images = new HashSet<Image>();
-            this.Sizes = new HashSet<Size>();
             this.Cartitems = new HashSet<Cartitem>();
+            this.Sizes = new HashSet<Size>();
         }
     
         public int ID { get; set; }
@@ -36,8 +36,8 @@ namespace baitap_mvc_3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Image> Images { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Size> Sizes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cartitem> Cartitems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Size> Sizes { get; set; }
     }
 }

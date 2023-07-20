@@ -81,3 +81,7 @@ C:\Users\cuog2\source\repos\baitap_mvc_3\baitap_mvc_3\obj\Debug\baitap_mvc_3.csp
 C:\Users\cuog2\source\repos\baitap_mvc_3\baitap_mvc_3\obj\Debug\baitap_mvc_3.csproj.CopyComplete
 C:\Users\cuog2\source\repos\baitap_mvc_3\baitap_mvc_3\obj\Debug\baitap_mvc_3.dll
 C:\Users\cuog2\source\repos\baitap_mvc_3\baitap_mvc_3\obj\Debug\baitap_mvc_3.pdb
+C:\Users\cuog2\source\repos\baitap_mvc_3\baitap_mvc_3\bin\Microsoft.Configuration.ConfigurationBuilders.Base.dll
+C:\Users\cuog2\source\repos\baitap_mvc_3\baitap_mvc_3\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll
+C:\Users\cuog2\source\repos\baitap_mvc_3\baitap_mvc_3\bin\Microsoft.Configuration.ConfigurationBuilders.Base.xml
+C:\Users\cuog2\source\repos\baitap_mvc_3\baitap_mvc_3\bin\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.xml
