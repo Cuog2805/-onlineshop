@@ -25,6 +25,9 @@
             @Html.DisplayNameFor(model => model.Color)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Sizes)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Decription)
         </th>
         <th>
@@ -47,14 +50,17 @@
                     if (item.Images.Count(m => m.ProductID == item.ID) > 0)
                     {
                         <img class="slide" src="@item.Images.ToList()[0].Url" alt="Not found" style="height: 100px; width: 100px">
-                        <div class="slide-@item.ID" style="display: none">
-                            @for (int i = 1; i < item.Images.Count; i++)
-                            {
-                                <img class="slide" src="@item.Images.ToList()[i].Url" alt="Not found" style="height: 100px; width: 100px">
-                            }
-                        </div>
-                        <a class="btn btn-primary" id="btn-expand" onclick="ExpandImage(@item.ID)">+</a>
-                        <a class="btn btn-primary" id="btn-hide" onclick="HideImage(@item.ID)" style="display: none">-</a>
+                        if (item.Images.Count(m => m.ProductID == item.ID) > 1)
+                        {
+                            <div id="slide-@item.ID" style="display: none">
+                                @for (int i = 1; i < item.Images.Count; i++)
+                                {
+                                    <img class="slide" src="@item.Images.ToList()[i].Url" alt="Not found" style="height: 100px; width: 100px">
+                                }
+                            </div>
+                            <a class="btn btn-primary" id="btn-expand-@item.ID" onclick="ExpandImage(@item.ID)">+</a>
+                            <a class="btn btn-primary" id="btn-hide-@item.ID" onclick="HideImage(@item.ID)" style="display: none">-</a>
+                        }
                     }
                     else
                     {
@@ -67,6 +73,21 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @if (item.Sizes.Count > 0)
+                {
+                    <div class="d-flex flex-row" style="display: flex">
+                        @foreach (var size in item.Sizes)
+                        {
+                            <div class="p-2">@size.Size1&ensp;</div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p>Out of size</p>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Decription)
@@ -90,15 +111,15 @@
     <script>
         function ExpandImage(productID) {
             var slide = $("#slide-" + productID);
-            slide.css({"display": "block"});
-            $("#btn-hide").show();
-            $(this).hide;
+            slide.css({ "display": "block" });
+            $("#btn-hide-" + productID).show();
+            $("#btn-expand-" + productID).css({ "display": "none" });
         }
         function HideImage(productID) {
             var slide = $("#slide-" + productID);
-            slide.css({ "display": "hide" });
-            $("#btn-expand").show();
-            $(this).hide();
+            slide.css({ "display": "none" });
+            $("#btn-expand-" + productID).show();
+            $("#btn-hide-" + productID).css({ "display": "none" });
         }
     </script>
 }

@@ -7,10 +7,10 @@
 
 <h2>ProductEdit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("ProductEdit", "AdminProduct", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Product</h4>
         <hr />
@@ -58,9 +58,9 @@
         </div>
 
         <div class="form-group">
-            @{ 
+            @{
                 var brandList = new baitap_mvc_3.Models.baitap_mvc2Entities().Brands.ToList();
-                IEnumerable<SelectListItem> brandSelectList = brandList.Select(item => new SelectListItem{ Value = item.ID.ToString(), Text = item.Name});
+                IEnumerable<SelectListItem> brandSelectList = brandList.Select(item => new SelectListItem { Value = item.ID.ToString(), Text = item.Name });
             }
             @Html.LabelFor(model => model.BrandID, "BrandID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -69,9 +69,9 @@
         </div>
 
         <div class="form-group">
-            @{ 
+            @{
                 var categoryList = new baitap_mvc_3.Models.baitap_mvc2Entities().Categories.ToList();
-                IEnumerable<SelectListItem> categorySelectList = categoryList.Select(item => new SelectListItem { Value = item.ID.ToString(), Text = item.Name});
+                IEnumerable<SelectListItem> categorySelectList = categoryList.Select(item => new SelectListItem { Value = item.ID.ToString(), Text = item.Name });
             }
             @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -79,6 +79,48 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sizes, "Size", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (var item in ViewBag.sizeList)
+                {
+                    if (Model.Sizes.Contains(item))
+                    {
+                        <input class="form-check-input" id="selectedSize" name="selectedSize" type="checkbox" value="@item.ID" checked /> @item.Size1
+                    }
+                    else
+                    {
+                        <input class="form-check-input" id="selectedSize" name="selectedSize" type="checkbox" value="@item.ID" /> @item.Size1
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
+            @if (Model.Images.Count() > 0)
+            {
+                foreach (var image in Model.Images)
+                {
+                    <div class="col-md-2">
+                        <input type="image" name="fileImages" id="image-@image.ID" value="" src="@image.Url" alt="Not found" style="height: 100px; width: 100px" />
+                        <a class="btn btn-danger" id="btn-delete-@image.ID" onclick="DeleteImage(@image.ID)">x</a>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-md-10">
+                    <img class="img-fluid w-100" src="~/Data/OIP.jpg" alt="Not found" style="height: 100px; width: 100px">
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Add image</label>
+            <div class="col-md-10">
+                <input class="form-group" multiple type="file" name="fileImages" />
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -91,3 +133,20 @@
 <div>
     @Html.ActionLink("Back to List", "ProductMenu")
 </div>
+
+@section ProEdit{
+    <script>
+        function DeleteImage(imageID) {
+            var productID = @Model.ID;
+            $.ajax({
+                url: '/Admin/AdminProduct/ImageDelete',
+                type: 'post',
+                data: { imageID: imageID },
+                success: function (data) {
+                    $("#image-" + imageID).remove();
+                    $("#btn-delete-" + imageID).remove();
+                }
+            })
+        }
+    </script>
+}

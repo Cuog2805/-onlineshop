@@ -17,27 +17,13 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             List<Product> productList = db.Products.ToList();
             return View(productList);
         }
-        //Create
-        public ActionResult ProductCreate()
+        //Upload Image
+        void UploadImage(Product model, List<HttpPostedFileBase> fileImages)
         {
-            baitap_mvc2Entities db = new baitap_mvc2Entities();
-            List<Size> sizeList = db.Sizes.ToList();
-            ViewBag.sizeList = sizeList;
-            return View();
-        }
-        [HttpPost]
-        public ActionResult ProductCreate(Product model, int[] selectedSize, List<HttpPostedFileBase> fileImages)
-        {
-            baitap_mvc2Entities db = new baitap_mvc2Entities();
-            //add attributes
-            model.Quantity = 1;
-            model.Sizes = db.Sizes.Where(m => selectedSize.Contains(m.ID)).ToList();
-            db.Products.Add(model);
-            //add image
             var path = "";
-            foreach(var item in fileImages)
+            foreach (var item in fileImages)
             {
-                if(item != null)
+                if (item != null)
                 {
                     if (Path.GetExtension(item.FileName).ToLower() == ".jpg" || Path.GetExtension(item.FileName).ToLower() == ".png")
                     {
@@ -52,6 +38,27 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
                     }
                 }
             }
+        }
+        //Create
+        public ActionResult ProductCreate()
+        {
+            baitap_mvc2Entities db = new baitap_mvc2Entities();
+            ViewBag.sizeList = db.Sizes.ToList();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ProductCreate(Product model, int[] selectedSize, List<HttpPostedFileBase> fileImages)
+        {
+            baitap_mvc2Entities db = new baitap_mvc2Entities();
+            //add attributes
+            model.Quantity = 1;
+            if(selectedSize != null)
+            {
+                model.Sizes = db.Sizes.Where(m => selectedSize.Contains(m.ID)).ToList();
+            }
+            db.Products.Add(model);
+            //add image
+            UploadImage(model, fileImages);
 
             db.SaveChanges();
             return RedirectToAction("ProductMenu");
@@ -65,24 +72,49 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             }
             baitap_mvc2Entities db = new baitap_mvc2Entities();
             Product model = db.Products.Find(id);
+            ViewBag.sizeList = db.Sizes.ToList();
             return View(model);
         }
         [HttpPost]
-        public ActionResult ProductEdit(Product model)
+        public ActionResult ProductEdit(Product model, int[] selectedSize, List<HttpPostedFileBase> fileImages)
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
             var productUpdate = db.Products.Find(model.ID);
 
-            //productUpdate.ID = model.ID;
+            //gán productUpdate = giá trị từ Form
             productUpdate.Name = model.Name.Trim();
             productUpdate.Price = model.Price;
             productUpdate.Color = model.Color.Trim();
             productUpdate.Decription = model.Decription.Trim();
             productUpdate.BrandID = model.BrandID;
             productUpdate.CategoryID = model.CategoryID;
+            //xóa các quan hệ N-N của model cũ với bảng Size
+            productUpdate.Sizes.Clear();
+            if (selectedSize != null)
+            {
+                productUpdate.Sizes = db.Sizes.Where(m => selectedSize.Contains(m.ID)).ToList();
+            }
+            //img
+            UploadImage(productUpdate, fileImages);
 
             db.SaveChanges();
             return RedirectToAction("ProductMenu");
+        }
+        public JsonResult ImageDelete(int imageID)
+        {
+            baitap_mvc2Entities db = new baitap_mvc2Entities(); 
+            var image = db.Images.Find(imageID);
+            db.Images.Remove(image);
+            db.SaveChanges();
+            return Json(new {status = "success"});
+        }
+        public JsonResult ImageAdd(int imageID)
+        {
+            baitap_mvc2Entities db = new baitap_mvc2Entities();
+            var image = db.Images.Find(imageID);
+            db.Images.Remove(image);
+            db.SaveChanges();
+            return Json(new { status = "success" });
         }
         //Delete
         public ActionResult ProductDelete(int id)

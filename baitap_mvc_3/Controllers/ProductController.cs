@@ -46,7 +46,7 @@ namespace baitap_mvc_3.Controllers
             //lấy ra sản phẩm
             var product = db.Products.SingleOrDefault(m => m.ID == productID);
             //lấy ảnh profile của sản phẩm
-            var productProfile = db.Images.FirstOrDefault(m => m.ID == productID);
+            var productProfile = db.Images.FirstOrDefault(m => m.ProductID == productID);
             Cartitem cart = new Cartitem
             {
                 Name = product.Name,

@@ -87,13 +87,20 @@
                     <br />
                     <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Sizes:</strong>
-                        <select class="form-select" id="size-menu">
-                            <option id="size-null">Select size</option>
-                            @foreach (var item in Model.Sizes)
-                            {
-                                <option>@item.Size1</option>
-                            }
-                        </select>
+                        @if (Model.Sizes.Count() > 0)
+                        {
+                            <select class="form-select" id="size-menu">
+                                <option id="size-null">Select size</option>
+                                @foreach (var item in Model.Sizes)
+                                {
+                                    <option>@item.Size1</option>
+                                }
+                            </select>
+                        }
+                        else
+                        {
+                            <p>Hết hàng</p>
+                        }
                     </div>
                     <br />
                     <a class="btn btn-primary px-3" id="cartNotify" href="#">

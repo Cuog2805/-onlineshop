@@ -139,6 +139,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UserAuthenrize.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminExtraMenuController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\NhanvienController.cs" />
@@ -256,7 +257,6 @@
     <Content Include="Areas\Admin\Views\AdminProduct\ProductMenu.cshtml" />
     <Content Include="Areas\Admin\Views\AdminProduct\ProductCreate.cshtml" />
     <Content Include="Areas\Admin\Views\AdminProduct\ProductEdit.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminProduct\SizeCreate.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -289,6 +289,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\AdminExtraMenu\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

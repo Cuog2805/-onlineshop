@@ -13,14 +13,165 @@
     <div>
         @{
             var user = (baitap_mvc_3.Models.Nhanvien)HttpContext.Current.Session["admin"];
+            var sizeList = new baitap_mvc_3.Models.baitap_mvc2Entities().Sizes.ToList();
+            var brandList = new baitap_mvc_3.Models.baitap_mvc2Entities().Brands.ToList();
+            var categoryList = new baitap_mvc_3.Models.baitap_mvc2Entities().Categories.ToList();
         }
-
         <h3>Trang chu Admin + @user.TenNV</h3>
+        @Html.ActionLink("Đăng xuất", "Logout", "AdminHome")
+        <br />
         @Html.ActionLink("Danh sách", "Danhsach", "Nhanvien")
         <br />
         @Html.ActionLink("Products", "ProductMenu", "AdminProduct")
         <br />
-        @Html.ActionLink("Dăng xuất", "Logout", "AdminHome")
+        <a id="size-menu-button" href="#">Sizes Menu</a>
+        <div class="container" id="size-menu" style="display: none">
+            <table id="size-table-content">
+                <tr>
+                    <th>Size&ensp;|&ensp;</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in sizeList)
+                {
+                    <tr>
+                        <td><a id="size-info-@item.ID" href="#">@item.Size1</a></td>
+                        <td><a class="btn btn-danger" id="size-delete-@item.ID" href="#" onclick="DeleteSize(@item.ID)">-</a></td>
+                    </tr>
+                }
+            </table>
+            <label>Add:</label>
+            <input id="size-add-input" type="number" name="sizeInfo" style="width: 50px" />
+            <a class="btn btn-success" id="size-add" href="#" onclick="AddSize()">+</a>
+        </div>
+        <br />
+        <a id="brand-menu-button" href="#">Brand Menu</a>
+        <div class="container" id="brand-menu" style="display: none">
+            <table id="brand-table-content">
+                <tr>
+                    <th>Brand</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in brandList)
+                {
+                    <tr>
+                        <td><a id="brand-info-@item.ID" href="#">@item.Name</a></td>
+                        <td><a class="btn btn-danger" id="brand-delete-@item.ID" href="#" onclick="DeleteBrand(@item.ID)">-</a></td>
+                    </tr>
+                }
+            </table>
+            <label>Add:</label>
+            <input id="brand-add-input" type="text" name="brandInfo" style="width: 100px" />
+            <a class="btn btn-success" id="brand-add" href="#" onclick="AddBrand()">+</a>
+        </div>
+        <br />
+        <a id="category-menu-button" href="#">Category Menu</a>
+        <div class="container" id="category-menu" style="display: none">
+            <table id="category-table-content">
+                <tr>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in categoryList)
+                {
+                    <tr>
+                        <td><a id="category-info-@item.ID" href="#">@item.Name</a></td>
+                        <td><a class="btn btn-danger" id="category-delete-@item.ID" href="#" onclick="DeleteCategory(@item.ID)">-</a></td>
+                    </tr>
+                }
+            </table>
+            <label>Add:</label>
+            <input id="category-add-input" type="text" name="categoryInfo" style="width: 100px" />
+            <a class="btn btn-success" id="category-add" href="#" onclick="AddCategory()">+</a>
+        </div>
     </div>
 </body>
 </html>
+
+@section AdminIndex{
+    <script>
+        //sizeMenu
+        $("#size-menu-button").click(function () {
+            $("#size-menu").slideToggle();
+        })
+        function DeleteSize(sizeID) {
+            $.ajax({
+                url: "/AdminExtraMenu/SizeDelete",
+                type: "post",
+                data: { sizeID: sizeID },
+                success: function (data) {
+                    $("#size-delete-" + sizeID).remove();
+                    $("#size-info-" + sizeID).remove();
+                }
+            })
+        }
+        function AddSize() {
+            var sizeInfo = $("#size-add-input").val();
+            $.ajax({
+                url: "/AdminExtraMenu/SizeAdd",
+                type: "post",
+                data: { sizeInfo: sizeInfo },
+                success: function (data) {
+                    var button = '<td><a class="' + 'btn btn-danger"' + 'id=' + '"size-delete-' + data.sizeID + '"' + 'onclick=' + 'DeleteSize(' + data.sizeID + ')>-</a></td>'
+                    var string = '<td><a id=' + 'size-info-' + data.sizeID + '>' + data.sizeInfo + '</a></td>';
+                    $("#size-table-content").append("<tr>" + string + button + "</tr>")
+                }
+            })
+        }
+        //brandMenu
+        $("#brand-menu-button").click(function () {
+            $("#brand-menu").slideToggle();
+        })
+        function DeleteBrand(brandID) {
+            $.ajax({
+                url: "/AdminExtraMenu/BrandDelete",
+                type: "post",
+                data: { brandID: brandID },
+                success: function (data) {
+                    $("#brand-delete-" + brandID).remove();
+                    $("#brand-info-" + brandID).remove();
+                }
+            })
+        }
+        function AddBrand() {
+            var brandInfo = $("#brand-add-input").val();
+            $.ajax({
+                url: "/AdminExtraMenu/BrandAdd",
+                type: "post",
+                data: { brandInfo: brandInfo },
+                success: function (data) {
+                    var button = '<td><a class="' + 'btn btn-danger"' + 'id=' + '"size-delete-' + data.brandID + '"' + 'onclick=' + 'DeleteSize(' + data.brandID + ')>-</a></td>'
+                    var string = '<td><a id=' + 'size-info-' + data.brandID + '>' + data.brandInfo + '</a></td>';
+                    $("#brand-table-content").append("<tr>" + string + button + "</tr>")
+                }
+            })
+        }
+        //categoryMenu
+        $("#category-menu-button").click(function () {
+            $("#category-menu").slideToggle();
+        })
+        function DeleteCategory(categoryID) {
+            $.ajax({
+                url: "/AdminExtraMenu/CategoryDelete",
+                type: "post",
+                data: { categoryID: categoryID },
+                success: function (data) {
+                    $("#category-delete-" + categoryID).remove();
+                    $("#category-info-" + categoryID).remove();
+                }
+            })
+        }
+        function AddCategory() {
+            var categoryInfo = $("#category-add-input").val();
+            $.ajax({
+                url: "/AdminExtraMenu/CategoryAdd",
+                type: "post",
+                data: { categoryInfo: categoryInfo },
+                success: function (data) {
+                    var button = '<td><a class="' + 'btn btn-danger"' + 'id=' + '"category-delete-' + data.categoryID + '"' + 'onclick=' + 'DeleteCategory(' + data.categoryID + ')>-</a></td>'
+                    var string = '<td><a id=' + 'category-info-' + data.categoryID + '>' + data.categoryInfo + '</a></td>';
+                    $("#category-table-content").append("<tr>" + string + button + "</tr>")
+                }
+            })
+        }
+    </script>
+}
