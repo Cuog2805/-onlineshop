@@ -15,7 +15,6 @@ namespace baitap_mvc_3.Controllers
 {
 	public class HomeController : Controller
 	{
-        [UserAuthenrize]
 		public ActionResult Index(string sortOrder, string search = "")
 		{
 			baitap_mvc2Entities db = new baitap_mvc2Entities();

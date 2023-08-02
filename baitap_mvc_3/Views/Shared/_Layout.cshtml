@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -30,7 +31,7 @@
                         var customer = (baitap_mvc_3.Models.Customer)Session["customer-login"];
                     }
                     <li>
-                        <form class="navbar-brand mt-2 mt-lg-0" action="~/Home/Index" method="get" style="display: flex;">
+                        <form class="navbar-brand mt-2 mt-lg-0" action="~/Home/Index" method="get" style="display: flex; padding: 8px 50px">
                             <input type="search" class="form-control" placeholder="Search" name="search" />
                             <button class="form-control" type="submit" style="width: fit-content">
                                 <i class="fas fa-search"></i>
@@ -40,22 +41,25 @@
                     @if (customer != null)
                     {
                         <li>
-                            <a class="navbar-brand mt-2 mt-lg-0" href="~/Cart/CartIndex">Cart</a>
+                            <a class="navbar-brand mt-2 mt-lg-0" href="~/Cart/CartIndex?customerID=@customer.ID"><i class="fa fa-shopping-cart mr-1"></i></a>
                         </li>
                         <li>
-                            <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                                <img src="@customer.Url" style="border-radius: 50%; height:30px; width:30px" />
+                            <a class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" style="padding: 10px 15px">
+                                <img id="image-profile-customer-layout" src="@customer.Url" style="border-radius: 50%; height:30px; width:30px" />
                             </a>
-                        </li>
-
-                        <li>
-                            <a href="~/User/Logout">Logout</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="~/User/UserProfile?id=@customer.ID">My profile</a></li>
+                                <li><a class="dropdown-item" href="~/User/Logout">Logout</a></li>
+                            </ul> 
                         </li>
                     }
                     else
                     {
                         <li>
-                            <a href="~/User/Login">Login</a>
+                            <a href="~/User/Login">Sign in</a>
+                        </li>
+                        <li>
+                            <a href="~/User/Signup">Sign up</a>
                         </li>
                     }
                 </ul>
@@ -68,10 +72,10 @@
             <p>&copy; @DateTime.Now.Year - My Online Shop</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @RenderSection("productDetail", required: false)
+    @RenderSection("UserProfile", required: false)
 </body>
 </html>

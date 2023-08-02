@@ -1,50 +1,45 @@
 ﻿@model IEnumerable<baitap_mvc_3.Models.Nhanvien>
 
 @{
-    Layout = null;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<!DOCTYPE html>
+<h2>Admin</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Danhsach</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Them","Nhanvien")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TenNV)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sdt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ngaysinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diachi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IDLoaiNV)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Chucvu)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
+<p>
+    @Html.ActionLink("Create New", "Them", "Nhanvien")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TenNV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sdt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ngaysinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Diachi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDLoaiNV)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Chucvu)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Username)
@@ -71,13 +66,11 @@
                 @Html.DisplayFor(modelItem => item.Chucvu)
             </td>
             <td>
-                @Html.ActionLink("Cập nhật", "Capnhat", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                <a href="~/Admin/Nhanvien/Xoa?id=@item.ID">Delete</a>
+                @Html.ActionLink("Cập nhật", "Capnhat", new { id = item.ID }) |
+                @Html.ActionLink("Xóa", "Xoa", new { id = item.ID })
             </td>
         </tr>
     }
-    
-    </table>
-</body>
-</html>
+
+</table>
+@Html.ActionLink("Back To Menu", "Index", "AdminHome")

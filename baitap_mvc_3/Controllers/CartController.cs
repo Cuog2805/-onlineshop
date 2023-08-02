@@ -1,4 +1,5 @@
-﻿using baitap_mvc_3.Models;
+﻿using baitap_mvc_3.App_Start;
+using baitap_mvc_3.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,15 @@ namespace baitap_mvc_3.Controllers
     public class CartController : Controller
     {
         // GET: Cart
-        public ActionResult CartIndex()
+        [UserAuthenrize]
+        public ActionResult CartIndex(int? customerID)
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
-            List<Cartitem> cartItemList = db.Cartitems.ToList();
+            if(customerID == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            List<Cartitem> cartItemList = db.Cartitems.Where(m => m.CustomerID == customerID).ToList();
             return View(cartItemList);
         }
         public ActionResult CartDelete(int id)

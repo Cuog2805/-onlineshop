@@ -1,4 +1,5 @@
-﻿using baitap_mvc_3.Models;
+﻿using baitap_mvc_3.App_Start;
+using baitap_mvc_3.Models;
 using System.IO;
 using System.Web.Mvc;
 
@@ -7,6 +8,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
     public class AdminExtraMenuController : Controller
     {
         // GET: Admin/AdminExtraMenu
+        [AdminAuthenrize(idChucnang = 4)]
         public ActionResult SizeDelete(int sizeID)
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
@@ -15,6 +17,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             db.SaveChanges();
             return Redirect("/Admin/AdminHome/Index");
         }
+        [AdminAuthenrize(idChucnang = 2)]
         [HttpPost]
         public JsonResult SizeAdd(int sizeInfo)
         {
@@ -25,6 +28,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             db.SaveChanges();
             return Json(new { sizeID = sizeNew.ID, sizeInfo = sizeNew.Size1});
         }
+        [AdminAuthenrize(idChucnang = 4)]
         public ActionResult BrandDelete(int brandID)
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
@@ -33,6 +37,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             db.SaveChanges();
             return Redirect("/Admin/AdminHome/Index");
         }
+        [AdminAuthenrize(idChucnang = 2)]
         [HttpPost]
         public JsonResult BrandAdd(string brandInfo)
         {
@@ -43,6 +48,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             db.SaveChanges();
             return Json(new { brandID = brandNew.ID, brandInfo = brandNew.Name});
         }
+        [AdminAuthenrize(idChucnang = 4)]
         public ActionResult CategoryDelete(int categoryID)
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
@@ -51,6 +57,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             db.SaveChanges();
             return Redirect("/Admin/AdminHome/Index");
         }
+        [AdminAuthenrize(idChucnang = 2)]
         [HttpPost]
         public JsonResult CategoryAdd(string categoryInfo)
         {

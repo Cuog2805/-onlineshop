@@ -25,18 +25,18 @@ namespace baitap_mvc_3.App_Start
             {
                 return;
             }
-            //else
-            //{
-            //    var returnUrl = filterContext.RequestContext.HttpContext.Request.RawUrl;
-            //    filterContext.Result = new RedirectToRouteResult(
-            //        new System.Web.Routing.RouteValueDictionary(
-            //            new
-            //            {
-            //                controller = "User",
-            //                action = "Login",
-            //                returnUrl = returnUrl.ToString()
-            //            }));
-            //}
+            else
+            {
+                var returnUrl = filterContext.RequestContext.HttpContext.Request.RawUrl;
+                filterContext.Result = new RedirectToRouteResult(
+                    new System.Web.Routing.RouteValueDictionary(
+                        new
+                        {
+                            controller = "User",
+                            action = "Login",
+                            returnUrl = returnUrl.ToString()
+                        }));
+            }
         }
     }
 }

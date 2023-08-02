@@ -1,0 +1,81 @@
+﻿@model IEnumerable<baitap_mvc_3.Models.Customer>
+
+@{
+    ViewBag.Title = "UserMenu";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>User</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                <img src="@item.Url" alt="Not Found" style="height: 100px; width: 100px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            @{
+                var status = new baitap_mvc_3.Models.baitap_mvc2Entities().Customers.Count(m => m.Status == true);
+            }
+            <td>
+                <input type="checkbox" @Html.Raw(status > 0 ? "checked" : "") onchange="Block(@item.ID)" />&ensp;<i class="fa fa-lock"></i>
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Back To Menu", "Index", "AdminHome")
+
+@section UserMenu{
+    <script>
+        function Block(customerID) {
+            $.ajax({
+                url: "/AdminUser/UserBlock",
+                type: "post",
+                data: { customerID: customerID },
+                success: function (data) {
+                    alert(data.status);
+                }
+            })
+        }
+    </script>
+}

@@ -47,6 +47,8 @@ namespace baitap_mvc_3.Controllers
             var product = db.Products.SingleOrDefault(m => m.ID == productID);
             //lấy ảnh profile của sản phẩm
             var productProfile = db.Images.FirstOrDefault(m => m.ProductID == productID);
+            //lấy customer sesion
+            var customer = (Customer)Session["customer-login"];
             Cartitem cart = new Cartitem
             {
                 Name = product.Name,
@@ -55,7 +57,7 @@ namespace baitap_mvc_3.Controllers
                 Price = product.Price,
                 Total = product.Price * product.Quantity,
                 ProductID = product.ID,
-                CustomerID = 3
+                CustomerID = customer.ID
             };
             if (productProfile != null)
             {

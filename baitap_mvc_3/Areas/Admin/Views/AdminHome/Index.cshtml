@@ -4,88 +4,85 @@
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div>
-        @{
-            var user = (baitap_mvc_3.Models.Nhanvien)HttpContext.Current.Session["admin"];
-            var sizeList = new baitap_mvc_3.Models.baitap_mvc2Entities().Sizes.ToList();
-            var brandList = new baitap_mvc_3.Models.baitap_mvc2Entities().Brands.ToList();
-            var categoryList = new baitap_mvc_3.Models.baitap_mvc2Entities().Categories.ToList();
-        }
-        <h3>Trang chu Admin + @user.TenNV</h3>
-        @Html.ActionLink("Đăng xuất", "Logout", "AdminHome")
-        <br />
-        @Html.ActionLink("Danh sách", "Danhsach", "Nhanvien")
-        <br />
-        @Html.ActionLink("Products", "ProductMenu", "AdminProduct")
-        <br />
-        <a id="size-menu-button" href="#">Sizes Menu</a>
-        <div class="container" id="size-menu" style="display: none">
-            <table id="size-table-content">
+
+
+<div>
+    @{
+        var user = (baitap_mvc_3.Models.Nhanvien)HttpContext.Current.Session["admin"];
+        var sizeList = new baitap_mvc_3.Models.baitap_mvc2Entities().Sizes.ToList();
+        var brandList = new baitap_mvc_3.Models.baitap_mvc2Entities().Brands.ToList();
+        var categoryList = new baitap_mvc_3.Models.baitap_mvc2Entities().Categories.ToList();
+    }
+    <h3>Trang chu Admin + @user.TenNV</h3>
+    @Html.ActionLink("Đăng xuất", "Logout", "AdminHome")
+    <br />
+    @Html.ActionLink("Danh sách", "Danhsach", "Nhanvien")
+    <br />
+    @Html.ActionLink("User", "UserMenu", "AdminUser")
+    <br />
+    @Html.ActionLink("Products", "ProductMenu", "AdminProduct")
+    <br />
+    <a id="size-menu-button" href="#">Sizes Menu</a>
+    <div class="container" id="size-menu" style="display: none">
+        <table id="size-table-content">
+            <tr>
+                <th>Size&ensp;|&ensp;</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in sizeList)
+            {
                 <tr>
-                    <th>Size&ensp;|&ensp;</th>
-                    <th>Action</th>
+                    <td><a id="size-info-@item.ID" href="#">@item.Size1</a></td>
+                    <td><a class="btn btn-danger" id="size-delete-@item.ID" href="#" onclick="DeleteSize(@item.ID)">-</a></td>
                 </tr>
-                @foreach (var item in sizeList)
-                {
-                    <tr>
-                        <td><a id="size-info-@item.ID" href="#">@item.Size1</a></td>
-                        <td><a class="btn btn-danger" id="size-delete-@item.ID" href="#" onclick="DeleteSize(@item.ID)">-</a></td>
-                    </tr>
-                }
-            </table>
-            <label>Add:</label>
-            <input id="size-add-input" type="number" name="sizeInfo" style="width: 50px" />
-            <a class="btn btn-success" id="size-add" href="#" onclick="AddSize()">+</a>
-        </div>
-        <br />
-        <a id="brand-menu-button" href="#">Brand Menu</a>
-        <div class="container" id="brand-menu" style="display: none">
-            <table id="brand-table-content">
-                <tr>
-                    <th>Brand</th>
-                    <th>Action</th>
-                </tr>
-                @foreach (var item in brandList)
-                {
-                    <tr>
-                        <td><a id="brand-info-@item.ID" href="#">@item.Name</a></td>
-                        <td><a class="btn btn-danger" id="brand-delete-@item.ID" href="#" onclick="DeleteBrand(@item.ID)">-</a></td>
-                    </tr>
-                }
-            </table>
-            <label>Add:</label>
-            <input id="brand-add-input" type="text" name="brandInfo" style="width: 100px" />
-            <a class="btn btn-success" id="brand-add" href="#" onclick="AddBrand()">+</a>
-        </div>
-        <br />
-        <a id="category-menu-button" href="#">Category Menu</a>
-        <div class="container" id="category-menu" style="display: none">
-            <table id="category-table-content">
-                <tr>
-                    <th>Category</th>
-                    <th>Action</th>
-                </tr>
-                @foreach (var item in categoryList)
-                {
-                    <tr>
-                        <td><a id="category-info-@item.ID" href="#">@item.Name</a></td>
-                        <td><a class="btn btn-danger" id="category-delete-@item.ID" href="#" onclick="DeleteCategory(@item.ID)">-</a></td>
-                    </tr>
-                }
-            </table>
-            <label>Add:</label>
-            <input id="category-add-input" type="text" name="categoryInfo" style="width: 100px" />
-            <a class="btn btn-success" id="category-add" href="#" onclick="AddCategory()">+</a>
-        </div>
+            }
+        </table>
+        <label>Add:</label>
+        <input id="size-add-input" type="number" name="sizeInfo" style="width: 50px" />
+        <a class="btn btn-success" id="size-add" href="#" onclick="AddSize()">+</a>
     </div>
-</body>
-</html>
+    <br />
+    <a id="brand-menu-button" href="#">Brand Menu</a>
+    <div class="container" id="brand-menu" style="display: none">
+        <table id="brand-table-content">
+            <tr>
+                <th>Brand</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in brandList)
+            {
+                <tr>
+                    <td><a id="brand-info-@item.ID" href="#">@item.Name</a></td>
+                    <td><a class="btn btn-danger" id="brand-delete-@item.ID" href="#" onclick="DeleteBrand(@item.ID)">-</a></td>
+                </tr>
+            }
+        </table>
+        <label>Add:</label>
+        <input id="brand-add-input" type="text" name="brandInfo" style="width: 100px" />
+        <a class="btn btn-success" id="brand-add" href="#" onclick="AddBrand()">+</a>
+    </div>
+    <br />
+    <a id="category-menu-button" href="#">Category Menu</a>
+    <div class="container" id="category-menu" style="display: none">
+        <table id="category-table-content">
+            <tr>
+                <th>Category</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in categoryList)
+            {
+                <tr>
+                    <td><a id="category-info-@item.ID" href="#">@item.Name</a></td>
+                    <td><a class="btn btn-danger" id="category-delete-@item.ID" href="#" onclick="DeleteCategory(@item.ID)">-</a></td>
+                </tr>
+            }
+        </table>
+        <label>Add:</label>
+        <input id="category-add-input" type="text" name="categoryInfo" style="width: 100px" />
+        <a class="btn btn-success" id="category-add" href="#" onclick="AddCategory()">+</a>
+    </div>
+</div>
+
 
 @section AdminIndex{
     <script>

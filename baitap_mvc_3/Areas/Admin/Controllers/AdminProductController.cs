@@ -1,4 +1,5 @@
-﻿using baitap_mvc_3.Models;
+﻿using baitap_mvc_3.App_Start;
+using baitap_mvc_3.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
     public class AdminProductController : Controller
     {
         //Menu
+        [AdminAuthenrize(idChucnang = 1)]
         public ActionResult ProductMenu()
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
@@ -40,6 +42,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             }
         }
         //Create
+        [AdminAuthenrize(idChucnang = 2)]
         public ActionResult ProductCreate()
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
@@ -64,6 +67,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             return RedirectToAction("ProductMenu");
         }
         //Edit
+        [AdminAuthenrize(idChucnang = 3)]
         public ActionResult ProductEdit(int? id)
         {
             if(id == null)
@@ -117,6 +121,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
             return Json(new { status = "success" });
         }
         //Delete
+        [AdminAuthenrize(idChucnang = 4)]
         public ActionResult ProductDelete(int id)
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
