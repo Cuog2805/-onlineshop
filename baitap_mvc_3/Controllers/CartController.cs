@@ -25,10 +25,11 @@ namespace baitap_mvc_3.Controllers
         public ActionResult CartDelete(int id)
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();
+            var customer = (Customer)Session["customer-login"];
             var cartDelete = db.Cartitems.Find(id);
             db.Cartitems.Remove(cartDelete);
             db.SaveChanges();
-            return RedirectToAction("CartIndex");
+            return RedirectToAction("CartIndex", new { customerID = customer.ID});
         }
         [HttpPost]
         public JsonResult IncreaseQuantity(int cartItemID)

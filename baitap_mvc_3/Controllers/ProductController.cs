@@ -49,6 +49,11 @@ namespace baitap_mvc_3.Controllers
             var productProfile = db.Images.FirstOrDefault(m => m.ProductID == productID);
             //lấy customer sesion
             var customer = (Customer)Session["customer-login"];
+            //điều kiện
+            if(productSize == null)
+            {
+                productSize = product.Sizes.FirstOrDefault().Size1;
+            }
             Cartitem cart = new Cartitem
             {
                 Name = product.Name,
@@ -70,7 +75,7 @@ namespace baitap_mvc_3.Controllers
             product.Quantity = 1;
             db.SaveChanges();
 
-            return Json(new { status = "Đã thêm vào giỏ hàng" });
+            return Json(new { status = "Đã thêm vào giỏ hàng", cartCount = db.Cartitems.Count() });
         }
     }
 }

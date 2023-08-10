@@ -11,7 +11,7 @@ namespace baitap_mvc_3.Areas.Admin.Controllers
     public class AdminUserController : Controller
     {
         // GET: Admin/AdminUser
-        [AdminAuthenrize(idChucnang = 1]
+        [AdminAuthenrize(idChucnang = 1)]
         public ActionResult UserMenu()
         {
             baitap_mvc2Entities db = new baitap_mvc2Entities();

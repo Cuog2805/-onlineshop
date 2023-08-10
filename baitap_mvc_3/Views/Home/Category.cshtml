@@ -1,0 +1,57 @@
+﻿@model IEnumerable<baitap_mvc_3.Models.Product>
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="container-fluid" style="display: flex;">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Price
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="nav-item nav-link active" href="~/Home/Category?brandName=@ViewBag.Category&sortOrder=asc">Increase</a></li>
+            <li><a class="nav-item nav-link active" href="~/Home/Category?brandName=@ViewBag.Category&sortOrder=desc">Decrease</a></li>
+        </ul>
+    </div>
+</div>
+<br />
+<div class="row px-xl-5" id="productTable">
+    @if (Model.Count() < 1)
+    {
+        <h3>Không có sản phẩm nào =((</h3>
+    }
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+            <div class="product-item bg-light mb-4">
+                <div class="product-img position-relative overflow-hidden">
+                    @{
+                        if (item.Images.Count(m => m.ProductID == item.ID) > 0)
+                        {
+                            var profileImg = new baitap_mvc_3.Models.baitap_mvc2Entities().Images.FirstOrDefault(m => m.ProductID == item.ID);
+                            <img class="img-fluid w-100" src="@profileImg.Url" alt="" style="height: 300px">
+                        }
+                        else
+                        {
+                            <img class="img-fluid w-100" src="~/Data/OIP.jpg" alt="Not found" style="height: 231px; width: 231px">
+                        }
+                    }
+                    <div class="product-action">
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href="~/Product/ProductDetail?id=@item.ID"><i class="fa fa-search"></i></a>
+                    </div>
+                </div>
+                <div class="text-center py-4">
+                    <a class="h6 text-decoration-none text-truncate" href="~/Product/ProductDetail?id=@item.ID"><h4>@item.Name</h4></a>
+                    <div class="d-flex align-items-center justify-content-center mt-2">
+                        <h5>đ @item.Price</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -60,14 +60,27 @@ namespace baitap_mvc_3.Controllers
 
             return View(productList);
 		}
-        public ActionResult NavbarData()
-		{
-			baitap_mvc2Entities db = new baitap_mvc2Entities();
-			List<Brand> brandList = db.Brands.ToList();
-			List<Category> categoryList = db.Categories.ToList();
-			ViewBag.brandList = brandList;
-			ViewBag.categoryList = categoryList;
-            return PartialView();
+        public ActionResult Category(string categoryName, string sortOrder)
+        {
+            baitap_mvc2Entities db = new baitap_mvc2Entities();
+            if (categoryName.IsEmpty())
+            {
+                return View("Error");
+            }
+            List<Product> productList = db.Products.Where(m => m.Category.Name == categoryName).ToList();
+            ViewBag.Category = categoryName;
+
+            //Sort
+            if (sortOrder == "asc")
+            {
+                productList = productList.OrderBy(m => m.Price).ToList();
+            }
+            else if (sortOrder == "desc")
+            {
+                productList = productList.OrderByDescending(m => m.Price).ToList();
+            }
+
+            return View(productList);
         }
     }
 }

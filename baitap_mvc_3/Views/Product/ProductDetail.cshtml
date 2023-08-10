@@ -36,41 +36,37 @@
         font-size: 24px;
     }
 
-    .prev {
-        left: -50px;
-    }
-
     .next {
-        right: 100px;
+        right: -30px;
     }
 </style>
 <h2>Detail</h2>
-<div class="row px-xl-5">
-    <div class="col-lg-5 mb-30">
-        <div class="slideshow">
-            @foreach (var item in Model.Images)
-            {
-                <div class="slide">
-                    <img class="w-100 h-100" src="@item.Url" alt="Image" style="height: 300px; width: 300px">
-                </div>
-            }
-            <a class="prev" href="#">❮</a>
-            <a class="next" href="#">❯</a>
+<div class="container-fluid pb-5">
+    <div class="row px-xl-8">
+        <div class="col-lg-5 mb-30">
+            <div class="slideshow">
+                @foreach (var item in Model.Images)
+                {
+                    <div class="slide" style="height: 563px; width: 563px">
+                        <img class="w-100 h-100" src="@item.Url" alt="Image">
+                    </div>
+                }
+                <a class="prev" href="#">❮</a>
+                <a class="next" href="#">❯</a>
+            </div>
         </div>
-    </div>
-    <div class="carousel-"></div>
-    <div class="col-lg-7 h-auto mb-30">
-        <div class="h-100 bg-light p-30">
+        <div class="carousel-"></div>
+        <div class="col-lg-7 h-auto mb-30">
             <div class="h-100 bg-light p-30">
-                <h3>@Html.DisplayFor(model => model.Name)</h3>
-                <h3 class="font-weight-semi-bold mb-4">@Html.DisplayFor(model => model.Price) đ</h3>
-                <p class="mb-4">
-                    @Html.DisplayFor(model => model.Color)
-                </p>
-                <p class="mb-4">
-                    @Html.DisplayFor(model => model.Decription)
-                </p>
-                <div class="d-flex align-items-center mb-4 pt-2">
+                <div class="h-100 bg-light p-30">
+                    <h3>@Html.DisplayFor(model => model.Name)</h3>
+                    <h3 class="font-weight-semi-bold mb-4">@Html.DisplayFor(model => model.Price) đ</h3>
+                    <p class="mb-4">
+                        @Html.DisplayFor(model => model.Color)
+                    </p>
+                    <p class="mb-4">
+                        @Html.DisplayFor(model => model.Decription)
+                    </p>
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
                             <button class="btn btn-primary btn-minus" id="decreaseQuantity" onclick="Decrease(@Model.ID)">
@@ -102,7 +98,6 @@
                             <p>Hết hàng</p>
                         }
                     </div>
-                    <br />
                     <a class="btn btn-primary px-3" id="cartNotify" href="#">
                         <i class="fa fa-shopping-cart mr-1"></i>Add To Cart
                     </a>
@@ -111,7 +106,6 @@
         </div>
     </div>
 </div>
-
 @section productDetail{
     <script>
         function Increase(productID) {
